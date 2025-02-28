@@ -9,120 +9,6 @@ import {
     Image,
     StyleSheet,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-
-const { width, height } = Dimensions.get('window');
-
-type MovieItem = {
-    id: number;
-    movieName: string;
-    image: any; // Use `any` for local image imports
-};
-
-const upcomming: MovieItem[] = [
-    {
-        id: 1,
-        movieName: 'Movie 1',
-        image: require('../assets/login.jpg'), // Replace with actual image path
-    },
-    {
-        id: 2,
-        movieName: 'Movie 2',
-        image: require('../assets/login.jpg'), // Replace with actual image path
-    },
-    {
-        id: 3,
-        movieName: 'Movie 3',
-        image: require('../assets/login.jpg'), // Replace with actual image path
-    },
-
-];
-
-export default function MovieList() {
-    const navigation = useNavigation();
-
-    return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Upcoming Movies</Text>
-            </View>
-
-            <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.scrollViewContent}
-            >
-                {upcomming.map((item, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        onPress={() => navigation.navigate('Movies', item)}
-                    >
-                        <View style={styles.movieCard}>
-                            <Image source={item.image} style={styles.movieImage} />
-                            <Text style={styles.movieTitle}>{item.movieName}</Text>
-                        </View>
-                    </TouchableOpacity>
-                ))}
-            </ScrollView>
-        </View>
-    );
-}
-
-// Define styles
-const styles = StyleSheet.create({
-    container: {
-        marginBottom: 32,
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'center', // Center the header text
-        alignItems: 'center',
-        marginHorizontal: 16,
-        marginBottom: 16,
-        marginTop: 25,
-    },
-    headerText: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#FFF', // Changed to white color
-    },
-    scrollViewContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        flexGrow: 1,
-        paddingHorizontal: 15,
-    },
-    movieCard: {
-        marginRight: 16,
-        alignItems: 'center', // Center movie title
-    },
-    movieImage: {
-        width: width * 0.28, // Reduced width
-        height: height * 0.32, // Increased height
-        borderRadius: 12,
-    },
-    movieTitle: {
-        color: '#FFF', // White color
-        textAlign: 'center', // Center the movie name
-        marginTop: 8,
-        fontSize: 16, // Slightly increased font size
-        fontWeight: 'bold',
-    },
-});
-*/
-
-
-
-import React from 'react';
-import {
-    Dimensions,
-    ScrollView,
-    TouchableOpacity,
-    View,
-    Text,
-    Image,
-    StyleSheet,
-} from 'react-native';
 import { useRouter } from "expo-router";
 
 const { width, height } = Dimensions.get('window');
@@ -214,5 +100,325 @@ const styles = StyleSheet.create({
         marginTop: 8,
         fontSize: 16,
         fontWeight: 'bold',
+    },
+});
+*/
+/*
+import React, { useState, useRef } from 'react';
+import {
+    Dimensions,
+    ScrollView,
+    TouchableOpacity,
+    View,
+    Text,
+    Image,
+    StyleSheet,
+} from 'react-native';
+import { useRouter } from "expo-router";
+import { ChevronLeftIcon, ChevronRightIcon } from 'react-native-heroicons/outline';
+
+const { width, height } = Dimensions.get('window');
+
+const upcoming = [
+    {
+        id: 1,
+        movieName: 'Movie 1',
+        image: require('../assets/login.jpg'),
+    },
+    {
+        id: 2,
+        movieName: 'Movie 2',
+        image: require('../assets/login.jpg'),
+    },
+    {
+        id: 3,
+        movieName: 'Movie 3',
+        image: require('../assets/login.jpg'),
+    },
+    {
+        id: 4,
+        movieName: 'Movie 4',
+        image: require('../assets/login.jpg'),
+    },
+    {
+        id: 5,
+        movieName: 'Movie 5',
+        image: require('../assets/login.jpg'),
+    },
+    {
+        id: 6,
+        movieName: 'Movie 6',
+        image: require('../assets/login.jpg'),
+    },
+];
+
+export default function MovieList() {
+    const router = useRouter();
+    const scrollViewRef = useRef<ScrollView>(null);
+    const [currentIndex, setCurrentIndex] = useState(3);
+
+    const scrollToCard = (index: number) => {
+        const cardWidth = width * 0.28 + 16;
+        const offset = index * cardWidth - (width / 2 - cardWidth / 2);
+        scrollViewRef.current?.scrollTo({ x: offset, animated: true });
+        setCurrentIndex(index);
+    };
+
+    const scrollLeft = () => {
+        if (currentIndex > 0) {
+            scrollToCard(currentIndex - 1);
+        }
+    };
+
+    const scrollRight = () => {
+        if (currentIndex < upcoming.length - 1) {
+            scrollToCard(currentIndex + 1);
+        }
+    };
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>Upcoming Movies</Text>
+            </View>
+
+            <View style={styles.scrollContainer}>
+                <TouchableOpacity style={styles.arrowButton} onPress={scrollLeft} disabled={currentIndex === 0}>
+                    <ChevronLeftIcon size={30} color={currentIndex === 0 ? 'gray' : '#FFF'} />
+                </TouchableOpacity>
+
+                <ScrollView
+                    ref={scrollViewRef}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.scrollViewContent}
+                    scrollEnabled={false}
+                >
+                    {upcoming.map((item, index: number) => (
+                        <TouchableOpacity
+                            key={item.id}
+                            onPress={() => router.push({ pathname: "/MovieScreen", params: item })}
+                        >
+                            <View style={styles.movieCard}>
+                                <Image source={item.image} style={styles.movieImage} />
+                                <Text style={styles.movieTitle}>{item.movieName}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
+
+                <TouchableOpacity style={styles.arrowButton} onPress={scrollRight} disabled={currentIndex === upcoming.length - 1}>
+                    <ChevronRightIcon size={30} color={currentIndex === upcoming.length - 1 ? 'gray' : '#FFF'} />
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+}
+
+// Styles
+const styles = StyleSheet.create({
+    container: {
+        marginBottom: 32,
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 16,
+        marginBottom: 16,
+        marginTop: 25,
+    },
+    headerText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#FFF',
+    },
+    scrollContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    scrollViewContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: width / 2 - (width * 0.28 / 2),
+    },
+    movieCard: {
+        marginRight: 16,
+        alignItems: 'center',
+    },
+    movieImage: {
+        width: width * 0.28,
+        height: height * 0.32,
+        borderRadius: 12,
+    },
+    movieTitle: {
+        color: '#FFF',
+        textAlign: 'center',
+        marginTop: 8,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    arrowButton: {
+        padding: 10,
+    },
+});*/
+
+
+import React, { useState, useRef } from 'react';
+import {
+    Dimensions,
+    ScrollView,
+    TouchableOpacity,
+    View,
+    Text,
+    Image,
+    StyleSheet,
+} from 'react-native';
+import { useRouter } from "expo-router";
+import { ChevronLeftIcon, ChevronRightIcon } from 'react-native-heroicons/outline';
+
+const { width, height } = Dimensions.get('window');
+
+const upcoming = [
+    {
+        id: 1,
+        movieName: 'Movie 1',
+        image: require('../assets/login.jpg'),
+    },
+    {
+        id: 2,
+        movieName: 'Movie 2',
+        image: require('../assets/login.jpg'),
+    },
+    {
+        id: 3,
+        movieName: 'Movie 3',
+        image: require('../assets/login.jpg'),
+    },
+    {
+        id: 4,
+        movieName: 'Movie 4',
+        image: require('../assets/login.jpg'),
+    },
+    {
+        id: 5,
+        movieName: 'Movie 5',
+        image: require('../assets/login.jpg'),
+    },
+    {
+        id: 6,
+        movieName: 'Movie 6',
+        image: require('../assets/login.jpg'),
+    },
+];
+
+export default function MovieList() {
+    const router = useRouter();
+    const scrollViewRef = useRef<ScrollView>(null);
+    const [currentIndex, setCurrentIndex] = useState(2);
+
+    const scrollToCard = (index: number) => {
+        const cardWidth = width * 0.28 + 16;
+        const offset = index * cardWidth - (width / 2 - cardWidth / 2);
+        scrollViewRef.current?.scrollTo({ x: offset, animated: true });
+        setCurrentIndex(index);
+    };
+
+    const scrollLeft = () => {
+        if (currentIndex > 0) {
+            scrollToCard(currentIndex - 1);
+        }
+    };
+
+    const scrollRight = () => {
+        if (currentIndex < upcoming.length - 1) {
+            scrollToCard(currentIndex + 1);
+        }
+    };
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>Upcoming Movies</Text>
+            </View>
+
+            <View style={styles.scrollContainer}>
+                <TouchableOpacity style={styles.arrowButton} onPress={scrollLeft} disabled={currentIndex === 0}>
+                    <ChevronLeftIcon size={30} color={currentIndex === 0 ? 'gray' : '#FFF'} />
+                </TouchableOpacity>
+
+                <ScrollView
+                    ref={scrollViewRef}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.scrollViewContent}
+                    scrollEnabled={false}
+                >
+                    {upcoming.map((item, index: number) => (
+                        <TouchableOpacity
+                            key={item.id}
+                            onPress={() => router.push({ pathname: "/MovieScreen", params: item })}
+                        >
+                            <View style={styles.movieCard}>
+                                <Image source={item.image} style={styles.movieImage} />
+                                <Text style={styles.movieTitle}>{item.movieName}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
+
+                <TouchableOpacity style={styles.arrowButton} onPress={scrollRight} disabled={currentIndex === upcoming.length - 1}>
+                    <ChevronRightIcon size={30} color={currentIndex === upcoming.length - 1 ? 'gray' : '#FFF'} />
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
+}
+
+// Styles
+const styles = StyleSheet.create({
+    container: {
+        marginBottom: 32,
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 16,
+        marginBottom: 16,
+        marginTop: 25,
+    },
+    headerText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#FFF',
+    },
+    scrollContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    scrollViewContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: (width - (width * 0.28)) / 2, // Corrected padding
+    },
+    movieCard: {
+        marginRight: 16,
+        alignItems: 'center',
+    },
+    movieImage: {
+        width: width * 0.28,
+        height: height * 0.32,
+        borderRadius: 12,
+    },
+    movieTitle: {
+        color: '#FFF',
+        textAlign: 'center',
+        marginTop: 8,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    arrowButton: {
+        padding: 10,
     },
 });

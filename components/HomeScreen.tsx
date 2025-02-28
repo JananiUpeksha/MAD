@@ -76,20 +76,20 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
 });*/
-import React, {useState} from 'react';
+// HomeScreen.js
+import React, { useState } from 'react';
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, StatusBar, Platform, StyleSheet } from 'react-native';
 import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import TrendingMovies, { moviesData } from "./trendingMovies";
-import MovieList,{upcomming} from "./MovieList";
-
-/*import TrendingMovies, { moviesData } from './TrendingMovies'; // Import moviesData*/
+import MovieList, { upcoming } from "./MovieList";
 
 export default function HomeScreen() {
-    const [upcomingMovies, setUpcomingMovies] = useState([1,2,3])
-    const [topRated, setTopRated] = useState([1,2,3])
+    const [trendingMovies, setTrendingMovies] = useState([1, 2, 3]); // Initialize as an array
+    const [upcomingMovies, setUpcomingMovies] = useState([1, 2, 3]);
+    const [topRated, setTopRated] = useState([1, 2, 3]);
+
     return (
         <View style={styles.container}>
-            {/* Search bar and logo */}
             <SafeAreaView style={Platform.OS === 'ios' ? styles.iosSafeArea : styles.androidSafeArea}>
                 <StatusBar style="light" />
                 <View style={styles.header}>
@@ -107,34 +107,32 @@ export default function HomeScreen() {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.scrollViewContent}
             >
-                {/* Trending movies cards */}
-                <TrendingMovies data={moviesData} /> {/* Pass the moviesData array */}
-                <MovieList title="Upcoming" data={upcomming} />
-                
+                <TrendingMovies data={moviesData} />
+                <MovieList title="Upcoming" data={upcoming} />
+
             </ScrollView>
         </View>
     );
 }
 
-// Define the styles
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#262626', // Dark background color
+        backgroundColor: '#262626',
     },
     iosSafeArea: {
-        marginBottom: -8, // Adjust for iOS
+        marginBottom: -8,
     },
     androidSafeArea: {
-        marginBottom: 12, // Adjust for Android
+        marginBottom: 12,
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         marginHorizontal: 16,
-        paddingTop: 10, // Added padding for spacing
-        paddingBottom: 10, // Added padding for spacing
+        paddingTop: 10,
+        paddingBottom: 10,
     },
     title: {
         color: 'white',
@@ -142,7 +140,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     highlight: {
-        color: 'yellow', // Example highlight color
+        color: 'yellow',
     },
     scrollViewContent: {
         paddingBottom: 10,

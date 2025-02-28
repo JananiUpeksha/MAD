@@ -1,13 +1,14 @@
+// trendingMovies.js
 import React from 'react';
 import { View, Text, TouchableWithoutFeedback, Dimensions, Image, ScrollView, StyleSheet } from 'react-native';
-import { useRouter } from "expo-router"; // Import the router from expo-router
+import { useRouter } from "expo-router";
 
 const { width, height } = Dimensions.get('window');
 
 type MovieItem = {
     id: number;
     title: string;
-    image: any; // Use `any` for local image imports
+    image: any;
 };
 
 type TrendingMoviesProps = {
@@ -20,10 +21,9 @@ type MovieCardProps = {
 };
 
 export default function TrendingMovies({ data }: TrendingMoviesProps) {
-    const router = useRouter(); // Initialize the router
+    const router = useRouter();
 
     const handleClick = (item: MovieItem) => {
-        // Navigate to MovieScreen when an image is clicked
         router.push({
             pathname: '/MovieScreen',
             params: { id: item.id, title: item.title, image: item.image }
@@ -49,7 +49,7 @@ const MovieCard = ({ item, handleClick }: MovieCardProps) => {
         <TouchableWithoutFeedback onPress={handleClick}>
             <View style={styles.cardContainer}>
                 <Image
-                    source={item.image} // Use the imported image
+                    source={item.image}
                     style={styles.cardImage}
                 />
                 <Text style={styles.cardTitle}>{item.title}</Text>
@@ -58,39 +58,37 @@ const MovieCard = ({ item, handleClick }: MovieCardProps) => {
     );
 };
 
-// Example data with local images
 export const moviesData: MovieItem[] = [
     {
         id: 1,
         title: 'Movie 1',
-        image: require('../assets/login.jpg'), // Use require for local images
+        image: require('../assets/login.jpg'),
     },
     {
         id: 2,
         title: 'Movie 2',
-        image: require('../assets/login.jpg'), // Use require for local images
+        image: require('../assets/login.jpg'),
     },
     {
         id: 3,
         title: 'Movie 3',
-        image: require('../assets/login.jpg'), // Use require for local images
+        image: require('../assets/login.jpg'),
     },
 ];
 
-// Define styles
 const styles = StyleSheet.create({
     rowContainer: {
-        flexDirection: 'row', // Display items in a row
-        justifyContent: 'space-between', // Space items evenly
-        paddingHorizontal: 16, // Add horizontal padding
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 16,
     },
     cardContainer: {
-        width: width * 0.3, // Adjust width to fit three images in a row
-        height: height * 0.2, // Adjust height proportionally
+        width: width * 0.3,
+        height: height * 0.2,
         borderRadius: 20,
         overflow: 'hidden',
         position: 'relative',
-        marginRight: 8, // Add margin between cards
+        marginRight: 8,
     },
     cardImage: {
         width: '100%',
