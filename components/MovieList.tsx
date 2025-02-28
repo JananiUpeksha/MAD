@@ -531,7 +531,6 @@ const styles = StyleSheet.create({
     scrollViewContent: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: (width - (width * 0.28)) / 2, // Corrected padding
     },
     movieCard: {
         marginRight: 16,

@@ -35,9 +35,12 @@ export const fetchTrendingMovies = async () => {
             const data = await searchMovies(searchTerm);
             if (data.Search) {
                 for (const movie of data.Search) {
-                    if (!seenImdbIDs.has(movie.imdbID)) {
-                        trendingResults.push(movie);
-                        seenImdbIDs.add(movie.imdbID);
+                    // Check if movie has a valid poster (not empty or a placeholder)
+                    if (movie.Poster && movie.Poster !== "N/A" && movie.Poster !== "") {
+                        if (!seenImdbIDs.has(movie.imdbID)) {
+                            trendingResults.push(movie);
+                            seenImdbIDs.add(movie.imdbID);
+                        }
                     }
                 }
             }
@@ -45,6 +48,7 @@ export const fetchTrendingMovies = async () => {
     }
     return trendingResults;
 };
+
 
 // Function to search movies by title
 export const searchMovies = async (searchTerm) => {
