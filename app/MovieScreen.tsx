@@ -5,6 +5,8 @@ import {
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ArrowLeftIcon, HeartIcon } from 'react-native-heroicons/outline';
 import { LinearGradient } from 'expo-linear-gradient';
+import {getMovieDetails} from "../api/MovieDB";
+import { fetchTrendingMovies } from "../api/MovieDB";
 
 export default function MovieScreen() {
     const navigation = useNavigation();
@@ -12,10 +14,13 @@ export default function MovieScreen() {
     const { movieName } = route.params as { movieName: string; image: any };
     const [isFavourite, toggleFavourite] = useState(false);
 
+
     useEffect(() => {
         // call the movie details api
         // item
     }, [route.params]);
+    const [movieDetails, setMovieDetails] = useState(null); // Initialize state
+
 
     const { width, height } = Dimensions.get('window');
     const ios = Platform.OS === 'ios';

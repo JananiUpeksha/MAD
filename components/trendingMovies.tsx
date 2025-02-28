@@ -6,9 +6,9 @@ import { useRouter } from "expo-router";
 const { width, height } = Dimensions.get('window');
 
 type MovieItem = {
-    id: number;
-    title: string;
-    image: any;
+    imdbID: string; // Change to imdbID
+    Title: string;  // Change to Title
+    Poster: string; // Change to Poster
 };
 
 type TrendingMoviesProps = {
@@ -26,7 +26,7 @@ export default function TrendingMovies({ data }: TrendingMoviesProps) {
     const handleClick = (item: MovieItem) => {
         router.push({
             pathname: '/MovieScreen',
-            params: { id: item.id, title: item.title, image: item.image }
+            params: { id: item.imdbID, title: item.Title, image: item.Poster } // Pass imdbID, Title, and Poster
         });
     };
 
@@ -36,7 +36,7 @@ export default function TrendingMovies({ data }: TrendingMoviesProps) {
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View style={styles.rowContainer}>
                     {data.map((item) => (
-                        <MovieCard key={item.id} item={item} handleClick={() => handleClick(item)} />
+                        <MovieCard key={item.imdbID} item={item} handleClick={() => handleClick(item)} />
                     ))}
                 </View>
             </ScrollView>
@@ -49,32 +49,33 @@ const MovieCard = ({ item, handleClick }: MovieCardProps) => {
         <TouchableWithoutFeedback onPress={handleClick}>
             <View style={styles.cardContainer}>
                 <Image
-                    source={item.image}
+                    source={{ uri: item.Poster }} // Load image from URL
                     style={styles.cardImage}
                 />
-                <Text style={styles.cardTitle}>{item.title}</Text>
+                <Text style={styles.cardTitle}>{item.Title}</Text>
             </View>
         </TouchableWithoutFeedback>
     );
 };
 
-export const moviesData: MovieItem[] = [
-    {
-        id: 1,
-        title: 'Movie 1',
-        image: require('../assets/login.jpg'),
-    },
-    {
-        id: 2,
-        title: 'Movie 2',
-        image: require('../assets/login.jpg'),
-    },
-    {
-        id: 3,
-        title: 'Movie 3',
-        image: require('../assets/login.jpg'),
-    },
-];
+// Remove the example data as it's no longer needed
+// export const moviesData: MovieItem[] = [
+//     {
+//         id: 1,
+//         title: 'Movie 1',
+//         image: require('../assets/login.jpg'),
+//     },
+//     {
+//         id: 2,
+//         title: 'Movie 2',
+//         image: require('../assets/login.jpg'),
+//     },
+//     {
+//         id: 3,
+//         title: 'Movie 3',
+//         image: require('../assets/login.jpg'),
+//     },
+// ];
 
 const styles = StyleSheet.create({
     rowContainer: {
