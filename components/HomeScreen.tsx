@@ -76,13 +76,17 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
 });*/
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, StatusBar, Platform, StyleSheet } from 'react-native';
 import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import TrendingMovies, { moviesData } from "./trendingMovies";
+import MovieList,{upcomming} from "./MovieList";
+
 /*import TrendingMovies, { moviesData } from './TrendingMovies'; // Import moviesData*/
 
 export default function HomeScreen() {
+    const [upcomingMovies, setUpcomingMovies] = useState([1,2,3])
+    const [topRated, setTopRated] = useState([1,2,3])
     return (
         <View style={styles.container}>
             {/* Search bar and logo */}
@@ -105,7 +109,8 @@ export default function HomeScreen() {
             >
                 {/* Trending movies cards */}
                 <TrendingMovies data={moviesData} /> {/* Pass the moviesData array */}
-               {/* <MovieList title="Upcoming" data={moviesData} /> */}
+                <MovieList title="Upcoming" data={upcomming} />
+                
             </ScrollView>
         </View>
     );

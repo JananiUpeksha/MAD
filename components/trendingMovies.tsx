@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableWithoutFeedback, Dimensions, Image, ScrollView, StyleSheet } from 'react-native';
+import { useRouter } from "expo-router"; // Import the router from expo-router
 
 const { width, height } = Dimensions.get('window');
 
@@ -19,9 +20,14 @@ type MovieCardProps = {
 };
 
 export default function TrendingMovies({ data }: TrendingMoviesProps) {
+    const router = useRouter(); // Initialize the router
+
     const handleClick = (item: MovieItem) => {
-        console.log('Clicked on:', item);
-        // Add your custom logic here, e.g., navigate to a details screen
+        // Navigate to MovieScreen when an image is clicked
+        router.push({
+            pathname: '/MovieScreen',
+            params: { id: item.id, title: item.title, image: item.image }
+        });
     };
 
     return (
